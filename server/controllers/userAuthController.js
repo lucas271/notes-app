@@ -1,0 +1,25 @@
+const User = require('../modules/UserAuth.js')
+
+module.exports.loginUser = async (req, res) => {
+    try {
+        const user = new User(req.body)
+        await user.login()
+        if(user.errors.length > 0) return res.status(400).json({errors: user.errors})
+        res.status(200).json({email: user.user.email, posts: user.user.notes})
+        
+    } catch (error) {
+        res.status(500).json({errors: ['SERVER ERROR']})
+    }
+}
+
+module.exports.registerUser = async (req, res) => {
+    try {
+        const user = new User(req.body)
+        await user.register()
+        if(user.errors.length > 0) return res.status(400).json({errors: user.errors})
+        res.status(200).json({email: user.user.email, posts: user.user.notes})
+
+    } catch (error) {
+        res.status(500).json({errors: ['SERVER ERROR']})
+    }
+}
