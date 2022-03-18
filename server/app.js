@@ -3,6 +3,8 @@ const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
 
+const Routes = require('./Routes')
+
 require('dotenv').config()
 
 app.use(cors({
@@ -13,6 +15,8 @@ app.use(cors({
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
+
+app.use(Routes)
 
 mongoose.connect(process.env.DATABASE, {
     useNewUrlParser: true,
