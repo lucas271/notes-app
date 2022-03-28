@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { useState, createContext } from "react";
+import { useState } from "react";
 
 import TextField from '@material-ui/core/TextField';
 import {ExitToApp, Edit, Delete, ArrowBack} from '@material-ui/icons';
@@ -23,7 +23,7 @@ const NotesPage = () => {
                 <TextField size="small" variant='outlined' color="secondary" onChange={(e) => setSearch(e.target.value)} value={search} label='Search Your Note'/>
 
                 <ExitToApp className="logout" onClick={async () => {
-                    dispatch(logoutAction())
+                    await dispatch(logoutAction())
                     window.location.reload()
                 }}/>
             </nav>
@@ -46,46 +46,37 @@ const AddNewNote = () => {
     const [title, setTitle] = useState('')
     const [newNoteWindow, setNewNoteWindow] = useState(false)
 
-    const [NewPosts, setNewPosts] = useState([])
     const dispatch = useDispatch()
 
-    const postNewNote = (e) => {
-        e.preventDefault()        
+    const postNewNote = async (e) => {
         dispatch(newNoteAction({user: user}, {note: {title, text}}))
-        setNewNoteWindow(!newNoteWindow)
-        setText('')
-        setTitle('')
+        window.location.reload()
     }
 
     return<>
         <section className="note">
-        {!newNoteWindow ?
-        <button className="new-note-btn" onClick={() => setNewNoteWindow(!newNoteWindow)}>+</button>
-        :
-        <>
-            <form action="/" onSubmit={e => postNewNote(e)} className='edit-form'>
-                <ArrowBack className='back note-btns'  onClick={(() => setNewNoteWindow(!newNoteWindow))}/>
-                <TextField onChange={(e) => setTitle(e.target.value)} value={title} label='Title'/>
-                <TextField
-                onChange={(e) => setText(e.target.value)}
-                value={text}
-                multiline
-                minRows={3}
-                maxRows={5}
-                label='type your text Here'
-                className="text"
-                variant='filled'
-                />
-                <button type="send" className="send-btn">Send</button>
-            </form>
-        </>
-        }
-    </section>
-
-    {NewPosts.map((Post) => {
-        console.log(Post)
-        return Post
-    })}
+            {!newNoteWindow ?
+            <button className="new-note-btn" onClick={() => setNewNoteWindow(!newNoteWindow)}>+</button>
+            :
+            <>
+                <form action="/" onSubmit={e => postNewNote(e)} className='edit-form'>
+                    <ArrowBack className='back note-btns'  onClick={(() => setNewNoteWindow(!newNoteWindow))}/>
+                    <TextField onChange={(e) => setTitle(e.target.value)} value={title} label='Title'/>
+                    <TextField
+                    onChange={(e) => setText(e.target.value)}
+                    value={text}
+                    multiline
+                    minRows={3}
+                    maxRows={5}
+                    label='type your text Here'
+                    className="text"
+                    variant='filled'
+                    />
+                    <button type="send" className="send-btn">Send</button>
+                </form>
+            </>
+            }
+        </section>
 
     </>
 

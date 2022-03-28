@@ -20,9 +20,11 @@ export const newNoteAction = ({user}, {note}) => {
 
             if(data.errors) return dispatch({type: NEW_NOTE_FAIL, payload: [data.errors]})
 
-            dispatch({type: NEW_NOTE_SUCCESS, payload: data.message})
 
-            console.log('a')
+            console.log(data)
+
+            dispatch({type: NEW_NOTE_SUCCESS, payload: data})
+
             const updatedUser = JSON.parse(localStorage.getItem("userInfo"))
             updatedUser.posts.push(data.note)
 

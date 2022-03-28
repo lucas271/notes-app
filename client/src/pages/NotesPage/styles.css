@@ -1,9 +1,5 @@
 body{
-    background-repeat: no-repeat;
-    background-size: cover;
-    overflow-x: hidden;
     overflow-y: auto;
-    background-color: yellow;
 }
 
 .nav-bar-container{

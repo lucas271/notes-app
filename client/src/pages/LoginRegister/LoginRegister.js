@@ -10,25 +10,18 @@ import './styles.css'
 const LoginRegister = () => {
     const [loginOrRegister, setLoginOrRegister] = useState(true)
 
-    console.log(JSON.parse(localStorage.getItem("userInfo")))
-
-    const user = useSelector(state => state.userReducer)
-
-    console.log(user)
-
-
     return <>
         <main className='auth-container'>
 
             {loginOrRegister? 
                 <>
                     <Login/>
-                    <p className='change'>Don't have an account? <span className='login-register-span' onClick={() => setLoginOrRegister(!loginOrRegister)}>Register</span></p>
+                    <p className='change-form'>Don't have an account? <span className='login-register-span' onClick={() => setLoginOrRegister(!loginOrRegister)}>Register</span></p>
                 </>
                 :
                 <>
                     <Register/>
-                    <p className='change'>Already have an account? <span className='login-register-span' onClick={() => setLoginOrRegister(!loginOrRegister)}>Login</span></p>
+                    <p className='change-form'>Already have an account? <span className='login-register-span' onClick={() => setLoginOrRegister(!loginOrRegister)}>Login</span></p>
                 </>
                   }
 
@@ -47,25 +40,26 @@ const Login = () => {
 
 
     const handleFormSubmit = async  (e) => {
-
+        e.preventDefault()
         const validation = validateForm(email, password)
 
         if (validation && validation.length > 0){ 
             setErrors(validation)
-            e.preventDefault()
             return
         }
 
-        dispatch(loginAction(email, password))
+        await dispatch(loginAction(email, password))
         if(user[0] && user[0].errors) {
             setErrors([user[0].errors])
             return e.preventDefault()
         }
 
+        window.location.reload()
+
     }
 
     return <>
-        <form className='auth-form-container' action="/" onSubmit={(e) => handleFormSubmit(e)}>
+        <form className='auth-form-container' onSubmit={async (e) => await handleFormSubmit(e)}>
             {errors.map(error => {
                 return <span key={errors.indexOf(error)} className='error-message'>{error}</span>
             })}
@@ -98,7 +92,7 @@ const Register = () => {
             return
         }
 
-        await dispatch(registerAction(email, password, repeatPassword)) 
+        dispatch(registerAction(email, password, repeatPassword)) 
 
         if(user[0] && user[0].errors) {
             setErrors([user[0].errors])
@@ -157,3 +151,4 @@ const validateForm= (email, password, repeatPassword=null) => {
 }
 
 export default LoginRegister
+
