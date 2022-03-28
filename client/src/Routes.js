@@ -1,19 +1,27 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 
-import LoginRegister from '../LoginRegister/LoginRegister'
+import LoginRegister from './pages/LoginRegister/LoginRegister'
+import NotesPage from './pages/NotesPage/NotesPage.js'
 
-import { useDispatch, useSelector } from "react-redux"
 
-const Routes = () => {
+
+const RoutesComponent = () => {
+
+
     return <>
 
         <Router>
 
-            <Router>
-                <Route path="/" element={<LoginRegister/>}/>
-            </Router>
+            <Routes>    
+                {localStorage.getItem("userInfo") ?
+                <Route path='/' element={<NotesPage/>}/>
+                :
+                <Route path="/" element={<LoginRegister/>}/>}   
+                
+                
+            </Routes>
         </Router>
     </>
 }
 
-export default Routes
+export default RoutesComponent

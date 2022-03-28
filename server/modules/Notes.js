@@ -7,6 +7,7 @@ class Notes{
     constructor(body){
         this.body = body
         this.errors = []
+        this.note = null
     }
 
     async newNote(){
@@ -14,11 +15,12 @@ class Notes{
             if(!this.body.note.title || !this.body.note.text) return this.errors.push('empty fields')
             if (this.errors.length > 0) return
 
-            await UserModel.updateOne({email: this.body.user.email}, 
-                {$push:
-                    {notes: {title: this.body.note.title, text: this.body.note.text, id:uuid.v4()}
-                }
-            })
+
+            this.note = {title: this.body.note.title, text: this.body.note.text, id:uuid.v4()}
+
+            await UserModel.updateOne({email: this.body.user.email}, {$push: {notes: this.note}})
+
+            
         } catch (error) {
             this.errors.push('could not create note error: '+ error)
         }

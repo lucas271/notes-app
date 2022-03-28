@@ -1,0 +1,147 @@
+body{
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: yellow;
+}
+
+.nav-bar-container{
+    height: 10vh;
+    width: 100vw;
+}
+
+.nav-bar{
+    position: fixed;
+    background-color: rgb(131, 131, 8);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: inherit;
+    width: inherit;
+    z-index: 2;
+    opacity: 0.6;
+    color: white;
+}
+
+.logout{
+    position: absolute;
+    right: 5%;
+}
+
+.logout:hover{
+    cursor: pointer;
+    color: rgb(80, 80, 80);
+}
+
+.notes-container{
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 95vw;
+    margin: 4vh auto;
+    flex-wrap: wrap;
+}
+
+@keyframes appearSmothly{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+.note{
+    position: relative;
+    width: 24vw;
+    height: 24vw;
+    padding: 2vw 2vw;
+    margin: 1.7vw;
+    background-image: url('../../assets/post-it.svg');
+    animation: 1.5s ease-in-out 1 appearSmothly;
+}
+
+
+
+@media (max-width:800px){
+    .note{
+        width: 40vw;
+        height: 40vw;
+    }
+}
+
+@media (max-width:600px){
+    .note{
+        width: 87vw;
+        height: 87vw;
+        top: 2vh;
+    }
+}
+
+.new-note-btn{
+    width: 100%;
+    height: inherit;
+    background-color: transparent;
+    color: white;
+    font-size: 32px;
+    border: none;
+}
+.new-note-btn:hover{
+    color: rgb(172, 172, 172);
+    cursor: pointer;
+}
+
+
+.note-btns{
+    position: absolute;
+    right: 2%;
+    top: 2%;
+
+}
+
+.delete:hover, .edit:hover, .back:hover{
+    color: white;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.edit-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    gap: 2.5vh;
+}
+
+.send-btn{
+    background-color: transparent;
+    border: 1px solid white;
+    width: 40%;
+    margin-top: 4vh;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+    margin-left: 30%;
+}
+
+.send-btn:hover{
+    cursor: pointer;
+    transition: 0.4s;
+    background-color: aliceblue;
+}
+
+
+
+@keyframes kkkkk{
+
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+.remove-note{
+    animation: 1s ease-in-out 1 kkkkk;
+}
