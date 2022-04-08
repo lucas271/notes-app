@@ -7,6 +7,8 @@ import {ExitToApp, Edit, Delete, ArrowBack} from '@material-ui/icons';
 import { logoutAction } from "../../services/actions/userAction";
 import { newNoteAction, deleteNoteAction, updateNoteAction } from "../../services/actions/notesAction";
 
+import {v4 as uuid} from 'uuid'
+
 import './styles.css'
 
 
@@ -45,12 +47,24 @@ const AddNewNote = () => {
     const [text, setText] = useState('')
     const [title, setTitle] = useState('')
     const [newNoteWindow, setNewNoteWindow] = useState(false)
+    const [id, setId] = useState(uuid())
+    const [newPosts, setNewPosts] = useState([])
 
     const dispatch = useDispatch()
 
     const postNewNote = async (e) => {
-        dispatch(newNoteAction({user: user}, {note: {title, text}}))
-        window.location.reload()
+        e.preventDefault()
+
+        if(!text || !title) return alert('no empty fields please')
+
+        setId(uuid())
+
+        setNewPosts([{note: {title, text, id}}, ...newPosts])
+        dispatch(newNoteAction({user: user}, {note: {title, text, id}}))
+
+        setText('')
+        setTitle('')
+        setNewNoteWindow(!newNoteWindow)
     }
 
     return<>
@@ -77,7 +91,9 @@ const AddNewNote = () => {
             </>
             }
         </section>
-
+        {newPosts.map(post => {
+            return <Notes key={post.note.id} post={post.note}/>
+        })}
     </>
 
 }
@@ -148,7 +164,7 @@ const DeleteNote = ({post, }) => {
     const deleteNoteFromDom= (e) => {
         e.preventDefault()
 
-
+        //better aproach would be to use useRef here
         if(!e.target.parentElement.parentElement.classList.contains('note')){
             e.target.parentElement.parentElement.parentElement.classList.add("remove-note")
 

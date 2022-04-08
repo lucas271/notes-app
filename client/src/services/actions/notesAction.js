@@ -16,6 +16,7 @@ export const newNoteAction = ({user}, {note}) => {
         try {
             dispatch({type: NEW_NOTE_REQUEST})
 
+            console.log(note)
             const {data} = await axios.post('http://localhost:3001/newNote', {user, note}, config)
 
             if(data.errors) return dispatch({type: NEW_NOTE_FAIL, payload: [data.errors]})
@@ -30,14 +31,8 @@ export const newNoteAction = ({user}, {note}) => {
 
             localStorage.setItem("userInfo", JSON.stringify(updatedUser))
         } catch (error) {
-            console.log(error)
             dispatch({type: NEW_NOTE_FAIL, payload: ['error']})
         }
-
-
-
-            
-
     }
 }
 
@@ -61,14 +56,8 @@ export const deleteNoteAction = ({user}, {deleteNote}) => {
             localStorage.setItem("userInfo", JSON.stringify(updatedUser))
 
         } catch (error) {
-            console.log(error)
             dispatch({type: DELETE_NOTE_FAIL, payload: ['error']})
         }
-
-
-
-            
-
     }
 }
 
@@ -97,13 +86,7 @@ export const updateNoteAction = ({user}, {updateNote}) => {
             localStorage.setItem("userInfo", JSON.stringify(updatedUser))
 
         } catch (error) {
-            console.log(error)
             dispatch({type: UPDATE_NOTE_FAIL, payload: ['error']})
         }
-
-
-
-            
-
     }
 }

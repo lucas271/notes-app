@@ -16,7 +16,7 @@ class Notes{
             if (this.errors.length > 0) return
 
 
-            this.note = {title: this.body.note.title, text: this.body.note.text, id:uuid.v4()}
+            this.note = {title: this.body.note.title, text: this.body.note.text, id:this.body.note.id}
 
             await UserModel.updateOne({email: this.body.user.email}, {$push: {notes: this.note}})
 
