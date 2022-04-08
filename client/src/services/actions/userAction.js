@@ -22,9 +22,8 @@ export const loginAction = (email, password) => {
                 config
             )
     
-            console.log('a')
-
-            if(data.errors) return dispatch({type: USER_REGISTER_FAIL, payload: [data]})
+            console.log(data)
+            if(data.errors) return dispatch({type: USER_LOGIN_FAIL, payload: {...data}})
 
 
             dispatch(
@@ -76,8 +75,6 @@ export const logoutAction = () => {
 
 
             const {data} = await axios.post('http://localhost:3001/logoutUser', {}, config)
-
-            console.log(data)
 
             if(data.errors) return dispatch({type: USER_LOGOUT_FAIL, payload: [data]})
     

@@ -5,8 +5,6 @@ module.exports.loginUser = async (req, res) => {
         const user = new User(req.body)
         await user.login()
         if(user.errors.length > 0) return res.json({errors: user.errors})
-        req.session.user = user.user
-        req.session.save()
         res.status(200).json({email: user.user.email, posts: user.user.notes})
         
     } catch (error) {
@@ -19,8 +17,6 @@ module.exports.registerUser = async (req, res) => {
         const user = new User(req.body)
         await user.register()
         if(user.errors.length > 0) return res.json({errors: user.errors})
-        req.session.user = user.user
-        req.session.save()
         res.status(200).json({email: user.user.email, posts: user.user.notes})
 
     } catch (error) {
@@ -29,9 +25,7 @@ module.exports.registerUser = async (req, res) => {
 }
 
 module.exports.logoutUser = async (req, res) => {
-    try {
-        req.session.destroy()
-        
+    try {        
         res.send('user logged out')
     } catch (error) {
         res.status(500).json({errors: ['SERVER ERROR']})

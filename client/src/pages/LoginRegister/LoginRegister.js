@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from 'react-redux'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {loginAction} from '../../services/actions/userAction.js'
 import {registerAction} from '../../services/actions/userAction.js'
 
@@ -38,7 +38,6 @@ const Login = () => {
     const dispatch = useDispatch()
     const user = useSelector(state => state.userReducer)
 
-
     const handleFormSubmit = async  (e) => {
         e.preventDefault()
         const validation = validateForm(email, password)
@@ -49,12 +48,11 @@ const Login = () => {
         }
 
         await dispatch(loginAction(email, password))
-        if(user[0] && user[0].errors) {
-            setErrors([user[0].errors])
+        if(user && user.errors) {
+            setErrors([user.errors, 'kkkkkk'])
             return e.preventDefault()
         }
 
-        window.location.reload()
 
     }
 

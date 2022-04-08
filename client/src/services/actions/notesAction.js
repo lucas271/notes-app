@@ -17,7 +17,7 @@ export const newNoteAction = ({user}, {note}) => {
             dispatch({type: NEW_NOTE_REQUEST})
 
             console.log(note)
-            const {data} = await axios.post('http://localhost:3001/newNote', {user, note}, config)
+            const {data} = await axios.put('http://localhost:3001/newNote', {user, note}, config)
 
             if(data.errors) return dispatch({type: NEW_NOTE_FAIL, payload: [data.errors]})
 
@@ -41,7 +41,7 @@ export const deleteNoteAction = ({user}, {deleteNote}) => {
         try {
             dispatch({type: DELETE_NOTE_REQUEST})
 
-            const {data} = await axios.post('http://localhost:3001/deleteNote', {user, deleteNote}, config)
+            const {data} = await axios.put('http://localhost:3001/deleteNote', {user, deleteNote}, config)
 
             if(data.errors) return dispatch({type: DELETE_NOTE_FAIL, payload: [data.errors]})
 

@@ -9,9 +9,9 @@ Router.post('/registerUser', registerUser)
 Router.post('/logoutUser', logoutUser)
 
 //userNotes
-Router.post('/newNote', newNote)
+Router.put('/newNote', newNote)
 Router.put('/updateNote', updateNote)
-Router.post('/deleteNote', deleteNote)
+Router.put('/deleteNote', deleteNote)
 
 
 module.exports = Router

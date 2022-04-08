@@ -12,6 +12,7 @@ const userReducer = (state={}, action) => {
             return action.payload
         
         case USER_LOGIN_FAIL:
+            console.log(action.payload)
             return action.payload
 
         case USER_REGISTER_REQUEST:
