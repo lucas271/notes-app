@@ -22,7 +22,6 @@ export const loginAction = (email, password) => {
                 config
             )
     
-            console.log(data)
             if(data.errors) return dispatch({type: USER_LOGIN_FAIL, payload: {...data}})
 
 
@@ -83,7 +82,6 @@ export const logoutAction = () => {
             dispatch({type: USER_LOGOUT_SUCCESS, payload: data})
             
         } catch (error) {
-            console.log(error)
             dispatch({type: USER_LOGOUT_FAIL, payload: ['error']})        
         }
 

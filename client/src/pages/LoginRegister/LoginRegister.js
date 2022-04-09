@@ -36,7 +36,6 @@ const Login = () => {
     const [password, setPassword] = useState('')
     const [errors, setErrors] = useState([])
     const dispatch = useDispatch()
-    const user = useSelector(state => state.userReducer)
 
     const handleFormSubmit = async  (e) => {
         e.preventDefault()
@@ -44,14 +43,16 @@ const Login = () => {
 
         if (validation && validation.length > 0){ 
             setErrors(validation)
-            return
-        }
-
-        await dispatch(loginAction(email, password))
-        if(user && user.errors) {
-            setErrors([user.errors, 'kkkkkk'])
             return e.preventDefault()
         }
+
+        const getDispatch = await dispatch(loginAction(email, password))
+        const user = getDispatch ? getDispatch.payload : ''
+        if(user && user.errors) {
+            setErrors([user.errors])
+            return e.preventDefault()
+        }
+        window.location.reload()
 
 
     }
@@ -78,9 +79,6 @@ const Register = () => {
 
     const dispatch = useDispatch()
 
-    const user = useSelector(state => state.userReducer)
-
-
     const handleFormSubmit = async (e) => {
         const validation = validateForm(email, password, repeatPassword)
         console.log(validation.length)
@@ -89,15 +87,20 @@ const Register = () => {
             e.preventDefault()
             return
         }
+        e.preventDefault()
 
-        dispatch(registerAction(email, password, repeatPassword)) 
 
-        if(user[0] && user[0].errors) {
-            setErrors([user[0].errors])
+        //quick solution for the project, still a crime. PLEASE disconsider this project (I was trying redux).
+        const getDispatch = await dispatch(registerAction(email, password, repeatPassword))
+        const user = getDispatch ? getDispatch.payload[0] : ''
+        console.log(user.errors)
+
+        if(user && user.errors) {
+            setErrors([user.errors])
             return e.preventDefault()
-
         }
 
+        window.location.reload()
     }
 
 
@@ -130,7 +133,7 @@ const validateForm= (email, password, repeatPassword=null) => {
         return errors
     }
     if(password.length < 6) {
-        errors.push('password cannot be smaller than 20 chars')
+        errors.push('password cannot be smaller than 6 chars')
         return errors
     }
 
@@ -149,4 +152,22 @@ const validateForm= (email, password, repeatPassword=null) => {
 }
 
 export default LoginRegister
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
