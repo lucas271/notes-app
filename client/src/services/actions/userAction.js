@@ -13,7 +13,7 @@ const config = {
 export const loginAction = (email, password) => {
     return async dispatch => {
         try {
-            dispatch({ type: USER_LOGIN_REQUEST})
+            dispatch({ type: USER_LOGIN_REQUEST, payload: {loading: true}})
 
 
             const {data} = await axios.post(
@@ -44,7 +44,7 @@ export const loginAction = (email, password) => {
 export const registerAction = (email, password, repeatPassword) => {
     return async dispatch => {
         try {
-            dispatch({ type: USER_REGISTER_REQUEST})
+            dispatch({ type: USER_REGISTER_REQUEST, payload: {loading: true}})
             if(!repeatPassword) return dispatch({type: USER_REGISTER_FAIL, payload: ['emptyFields']})
             const {data} = await axios.post(
                 'http://localhost:3001/registerUser',
@@ -70,7 +70,7 @@ export const logoutAction = () => {
     return async dispatch => {
 
         try {
-            dispatch({type: USER_LOGOUT_REQUEST})
+            dispatch({type: USER_LOGOUT_REQUEST, payload: {loading: true}})
 
 
             const {data} = await axios.post('http://localhost:3001/logoutUser', {}, config)
@@ -84,8 +84,5 @@ export const logoutAction = () => {
         } catch (error) {
             dispatch({type: USER_LOGOUT_FAIL, payload: ['error']})        
         }
-
-
-
     }
 }

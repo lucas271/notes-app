@@ -6,7 +6,7 @@ import { USER_LOGOUT_REQUEST, USER_LOGOUT_FAIL, USER_LOGOUT_SUCCESS} from '../co
 const userReducer = (state={}, action) => {
     switch (action.type) {
         case USER_LOGIN_REQUEST:
-            return state
+            return action.payload
     
         case USER_LOGIN_SUCCESS:
             return action.payload
@@ -15,7 +15,7 @@ const userReducer = (state={}, action) => {
             return action.payload
 
         case USER_REGISTER_REQUEST:
-            return state
+            return action.payload
 
         case USER_REGISTER_SUCCESS:
             return action.payload
@@ -24,7 +24,7 @@ const userReducer = (state={}, action) => {
             return action.payload
         
         case USER_LOGOUT_REQUEST:
-            return state
+            return action.payload
 
         case USER_LOGOUT_SUCCESS:
             return action.payload

@@ -25,7 +25,7 @@ const NotesPage = () => {
                 <TextField size="small" variant='outlined' color="secondary" onChange={(e) => setSearch(e.target.value)} value={search} label='Search Your Note'/>
 
                 <ExitToApp className="logout" onClick={async () => {
-                    await dispatch(logoutAction())
+                    dispatch(logoutAction())
                     window.location.reload()
                 }}/>
             </nav>

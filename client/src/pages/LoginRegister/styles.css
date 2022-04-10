@@ -121,3 +121,17 @@ p{
 .auth-form-container button{
     width: 15vw;
 }
+
+
+.see-password-container{
+    position: absolute;
+    bottom: 30%;
+    left: 16%;
+    display: flex;
+    align-items: center;
+    animation: 1s ease-in 0s 1 slideInFromLeft;
+}
+
+.see-password-container p{
+    color: rgb(138, 138, 138);
+}

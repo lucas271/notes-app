@@ -6,6 +6,7 @@ import {registerAction} from '../../services/actions/userAction.js'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import './styles.css'
+import { Checkbox } from '@material-ui/core';
 
 const LoginRegister = () => {
     const [loginOrRegister, setLoginOrRegister] = useState(true)
@@ -30,14 +31,14 @@ const LoginRegister = () => {
     </>
 }
 
-
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errors, setErrors] = useState([])
     const dispatch = useDispatch()
+    const [seePassword, setSeePassword] = useState(false)
 
-    const handleFormSubmit = async  (e) => {
+    const handleFormSubmit = (e) => {
         e.preventDefault()
         const validation = validateForm(email, password)
 
@@ -46,7 +47,7 @@ const Login = () => {
             return e.preventDefault()
         }
 
-        const getDispatch = await dispatch(loginAction(email, password))
+        const getDispatch = dispatch(loginAction(email, password))
         const user = getDispatch ? getDispatch.payload : ''
         if(user && user.errors) {
             setErrors([user.errors])
@@ -58,16 +59,21 @@ const Login = () => {
     }
 
     return <>
-        <form className='auth-form-container' onSubmit={async (e) => await handleFormSubmit(e)}>
+        <form className='auth-form-container' onSubmit={(e) => handleFormSubmit(e)}>
             {errors.map(error => {
                 return <span key={errors.indexOf(error)} className='error-message'>{error}</span>
             })}
             <h2>LOGIN FORM</h2>
             <TextField  type='email' variant='filled' value={email} onChange={e => setEmail(e.target.value)} label='Email'/>
-            <TextField type='password' variant='filled' value={password} onChange={e => setPassword(e.target.value)} label='Password'/>
+            <TextField type={!seePassword ? 'password' : 'text'}  variant='filled' value={password} onChange={e => setPassword(e.target.value)} label='Password'/>
             <Button type='submit' variant='contained'>SEND</Button>
 
         </form>
+        <div className='see-password-container'>
+            <Checkbox size='small' onChange={() => setSeePassword(!seePassword)} value={seePassword}></Checkbox>
+            <p>See Password</p>
+        </div>
+
     </>
 }
 
@@ -79,7 +85,7 @@ const Register = () => {
 
     const dispatch = useDispatch()
 
-    const handleFormSubmit = async (e) => {
+    const handleFormSubmit = (e) => {
         const validation = validateForm(email, password, repeatPassword)
         console.log(validation.length)
         if (validation.length > 0) {
@@ -91,7 +97,7 @@ const Register = () => {
 
 
         //quick solution for the project, still a crime. PLEASE disconsider this project (I was trying redux).
-        const getDispatch = await dispatch(registerAction(email, password, repeatPassword))
+        const getDispatch = dispatch(registerAction(email, password, repeatPassword))
         const user = getDispatch ? getDispatch.payload[0] : ''
         console.log(user.errors)
 
